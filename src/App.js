@@ -1,24 +1,48 @@
-import logo from './logo.svg';
-import './App.css';
+import React, {useState} from 'react'
+import TodoCreate from './components/Todo/TodoCreate';
+import TodoItem from './components/Todo/TodoItem';
+import { TaskContext } from "./contexts/TaskContext"
+
+const todoList = [
+  {
+    id: 1,
+    task: "Do the laundry!",
+    dueDate: new Date(2020, 11, 14, 10, 30),
+    isCompleted: false,
+    priority: 11,
+  },
+  {
+    id: 2,
+    task: "Do the dishes!",
+    dueDate: new Date(2020, 11, 14, 11, 0),
+    isCompleted: true,
+    priority: 10,
+  },
+  {
+    id: 3,
+    task: "Make the bed",
+    dueDate: new Date(2020, 11, 14, 6, 30),
+    isCompleted: false,
+    priority: 1,
+  },
+]
 
 function App() {
+  const [taskList, setTaskList] = useState(todoList)
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <TaskContext.Provider value={{taskList, setTaskList}}>
+      <div>
+        <h1>World's ugliest Todo App</h1>
+        <TodoCreate />
+        <hr/>
+        {taskList.map(todoItem => {
+          return (
+            <TodoItem key={todoItem.id} todoItem={todoItem} />
+          )
+        })}
+      </div>
+    </TaskContext.Provider>
   );
 }
 
