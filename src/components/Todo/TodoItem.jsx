@@ -4,9 +4,13 @@ export default function TodoItem({todoItem}) {
   const [isCompleted, setIsCompleted] = useState(todoItem.isCompleted)
   
   function getEmoji(priority) {
+    if(priority >= 50) {
+      return "♥️"
+    }
     if (priority > 10) {
       return "⭐️"
-    } else if (10 >= priority && priority > 5) {
+    } 
+    if (10 >= priority && priority > 5) {
       return "🔔"
     } else {
       return "🔹"
